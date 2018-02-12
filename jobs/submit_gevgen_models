@@ -1,0 +1,57 @@
+#!/usr/bin/env python
+
+############################################################
+# Submit GENIE jobs with alternative models
+#
+# A. Mastbaum <mastbaum@uchicago.edu>, 2018/01/11
+############################################################
+
+import os
+
+njobs = 50
+nevents = 500
+script = 'file:///uboone/app/users/mastbaum/generators/jobs/gevgen_models_ubflux.sh'
+
+# GENIE configurations and relevant generators
+configs = {
+    'DefaultPlusMECWithNC': [
+        'Default', 'Default+CCMEC', 'Default+CCMEC+NCMEC',
+        'CCMEC', 'CCQE', 'CCRES', 'CCDIS', 'CCCOH',
+        'NCMEC', 'NCEL', 'NCRES', 'NCDIS', 'NCCOH',
+    ],
+    'LocalFGNievesQEAndMEC': [
+        'Default+MEC', 'CCMEC',
+    ],
+    'EffSFTEM': [
+        'Default',
+        'CCQE', 'CCRES', 'CCDIS', 'CCCOH',
+        'NCEL', 'NCRES', 'NCDIS', 'NCCOH',
+    ],
+    'DefaultPlusValenciaMEC': [
+        'Default+CCMEC', 'CCMEC',
+        'CCQE', 'CCRES', 'CCDIS', 'CCCOH',
+        'NCEL', 'NCRES', 'NCDIS', 'NCCOH',
+    ],
+    'AltPion': [
+        'Default',
+        'CCQE', 'CCRES', 'CCDIS', 'CCCOH',
+        'NCEL', 'NCRES', 'NCDIS', 'NCCOH',
+    ],
+    'ValenciaQEBergerSehgalCOHRES': [
+        'Default', 'Default+CCMEC', 'Default+CCMEC+1K', 'CCMEC', 'SingleKaon',
+        'CCQE', 'CCRES', 'CCDIS', 'CCCOH',
+        'NCEL', 'NCRES', 'NCDIS', 'NCCOH',
+    ],
+    'DefaultPlusMECWithNCAndhN2015': [
+        'Default', 'Default+CCMEC', 'Default+CCMEC+NCMEC',
+        'CCMEC', 'CCQE', 'CCRES', 'CCDIS', 'CCCOH',
+        'NCMEC', 'NCEL', 'NCRES', 'NCDIS', 'NCCOH',
+    ],
+}
+
+# Submit jobs
+for config, generators in configs.items():
+    for gen in generators:
+        cmd = 'jobsub_submit --memory=2000MB --group=uboone --resource-provides=usage_model=OPPORTUNISTIC -N %i %s %i %s %s' % (njobs, script, nevents, config, gen)
+        os.system(cmd)
+
