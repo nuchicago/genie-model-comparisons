@@ -3,7 +3,7 @@
 ###########################################################
 # Submit GENIE jobs with various models
 # 
-# Approximately BNB flux at MicroBooNE.
+# Monoenergetic neutrinos (10 GeV).
 #
 # A. Mastbaum <mastbaum@uchicago.edu>, 2018/02/01
 ###########################################################
@@ -17,7 +17,7 @@ date >>${LOG} 2>&1
 
 # GENIE gEvGen settings
 TGT="1000180400"
-ENERGY="0.00,6.75"
+ENERGY="10.0"
 NEVT="${1}"
 CONFIG="${2}"
 GENERATORS="${3}"
@@ -29,9 +29,9 @@ GXML="/pnfs/uboone/persistent/users/mastbaum/genie_xsec/v2_12_10/NULL/tar/${CONF
 
 # nue/numu
 NUPDG="14"
-FLUXFILE="/pnfs/uboone/persistent/users/mastbaum/genie/flux_num.root"
-OUTDIR="/pnfs/uboone/scratch/users/mastbaum/genie/ubflux_ng_num"
-FLUXOBJ="numu_CV_AV_TPC"
+OUTDIR="/pnfs/uboone/scratch/users/mastbaum/genie/mono_ng_num"
+#FLUXFILE="/pnfs/uboone/persistent/users/mastbaum/genie/flux_num.root"
+#FLUXOBJ="numu_CV_AV_TPC"
 
 #NUPDG="12"
 #FLUXFILE="/pnfs/uboone/persistent/users/mastbaum/genie/flux_nue.root"
@@ -67,7 +67,7 @@ ifdh cp ${FLUXFILE} ./flux.root >>${LOG} 2>&1
 # Run GENIE
 gevgen \
   -r ${PROCESS} -n ${NEVT} -p ${NUPDG} -t ${TGT} --seed ${SEED} \
-  -e ${ENERGY} -f ./flux.root,${FLUXOBJ} \
+  -e ${ENERGY} \
   --cross-sections ${GXMLPATH}/gxspl-small.xml \
   --event-generator-list ${GENERATORS} >>${LOG} 2>&1
 

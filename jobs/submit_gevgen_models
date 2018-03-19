@@ -8,9 +8,9 @@
 
 import os
 
-njobs = 50
-nevents = 500
-script = 'file:///uboone/app/users/mastbaum/generators/jobs/gevgen_models_ubflux.sh'
+njobs = 1000
+nevents = 2000
+script = 'file:///uboone/app/users/mastbaum/generators/jobs/gevgen_models_mono.sh'
 
 # GENIE configurations and relevant generators
 configs = {
